@@ -1,6 +1,7 @@
 # Tally
 
-**TODO: Add description**
+HTTP Proxy for enforcing Rate Limiting.  Acts as an HTTP middleware for
+enforcing client rate limits.
 
 ## Installation
 
