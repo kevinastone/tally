@@ -24,19 +24,7 @@ defmodule Tally do
   end
 
   defp run(options) do
-    import Supervisor.Spec, warn: false
-
-    config = Application.get_all_env(:tally) |> Keyword.merge(options)
-
-    children = [
-      # Define workers and child supervisors to be supervised
-      worker(Tally.Server, [config]),
-    ]
-
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one]
-    Supervisor.start_link(children, opts)
+    Tally.Supervisor.start_link(options)
   end
 
   defp parse_args(args) do
