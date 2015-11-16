@@ -18,6 +18,10 @@ defmodule Tally do
     options |> run
   end
 
+  def main(_args) do
+    :timer.sleep(:infinity)
+  end
+
   defp run([help: true]) do
     IO.puts @module_doc
     System.halt(0)

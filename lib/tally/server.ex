@@ -25,6 +25,5 @@ defmodule Tally.Server do
 
     IO.puts "Running Tally with Cowboy on http://#{host}:#{port}"
     Plug.Adapters.Cowboy.http Tally.Router, upstreams, ip: ip, port: port
-    :timer.sleep(:infinity)
   end
 end

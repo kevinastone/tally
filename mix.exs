@@ -15,8 +15,7 @@ defmodule Tally.Mixfile do
 
   def aliases do
     [
-      serve: ["run", &Tally.start/2],
-      test: "test --no-start"
+      run: ["run --no-halt"]
     ]
   end
 
