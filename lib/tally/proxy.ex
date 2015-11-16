@@ -1,16 +1,32 @@
 defmodule Tally.Proxy do
-  import Plug.Conn
+  use Plug.Builder
 
-  @behaviour Plug
-
-  def init(opts), do: opts
+  plug Tally.Bouncer
+  plug :proxy
 
   def call(conn, upstream) do
-    {:ok, client} = :hackney.request(conn.method, uri(conn, upstream), conn.req_headers, :stream, [])
-
     conn
-    |> write_proxy(client)
-    |> read_proxy(client)
+    |> Plug.Conn.put_private(:tally_upstream, upstream)
+    |> super(upstream)
+  end
+
+  def proxy(%Plug.Conn{private: %{tally_upstream: upstream}} = conn, _opts) do
+    case :hackney.request(conn.method, uri(conn, upstream), conn.req_headers, :stream, []) do
+      {:ok, client} -> conn |> proxy_client(client)
+      {:error, reason} -> conn |> proxy_error(reason)
+    end
+  end
+
+  defp proxy_error(conn, :connect_timeout) do
+    conn |> send_resp(504, "Connect timeout") |> halt
+  end
+
+  defp proxy_error(conn, reason) do
+    conn |> send_resp(503, Atom.to_string(reason)) |> halt
+  end
+
+  defp proxy_client(conn, client) do
+    conn |> write_proxy(client) |> read_proxy(client)
   end
 
   # Reads the connection body and write it to the
@@ -28,9 +44,7 @@ defmodule Tally.Proxy do
     end
   end
 
-  # Reads the client response and sends it back.
-  defp read_proxy(conn, client) do
-    {:ok, status, headers, client} = :hackney.start_response(client)
+  defp send_proxy_response(conn, client, status, headers) do
     {:ok, body} = :hackney.body(client)
 
     # Lowercase the headers
@@ -45,6 +59,18 @@ defmodule Tally.Proxy do
     conn
     |> merge_resp_headers(headers)
     |> send_resp(status, body)
+  end
+
+  defp error_proxy_response(conn, _client, reason) do
+    conn |> send_resp(503, Atom.to_string(reason)) |> halt
+  end
+
+  # Reads the client response and sends it back.
+  defp read_proxy(conn, client) do
+    case :hackney.start_response(client) do
+      {:ok, status, headers, client} -> send_proxy_response(conn, client, status, headers)
+      {:error, reason} ->error_proxy_response(conn, client, reason)
+    end
   end
 
   defp uri(conn, upstream) do

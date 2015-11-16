@@ -23,6 +23,7 @@ use Mix.Config
 
 config :tally,
   port: 4001,
+  limit: "100/m",
   upstreams: [
     {"/", "http://httpbin.org"},
   ]
