@@ -13,7 +13,13 @@ defmodule Tally.Supervisor do
     children = [
       # Define workers and child supervisors to be supervised
       worker(Tally.Server, [config]),
-      worker(ConCache, [[], [name: :tally]])
+      worker(ConCache, [
+        [
+          ttl_check: Application.get_env(:con_cache, :ttl_check),
+          ttl: Application.get_env(:con_cache, :ttl_check, 0)
+        ],
+        [name: :tally]
+      ])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

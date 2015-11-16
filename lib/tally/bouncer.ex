@@ -2,7 +2,7 @@ defmodule Tally.Bouncer do
   use Plug.Builder
 
   plug :identify, adapter: Tally.Identify.BearerToken
-  plug :limit, adapter: Tally.Limit.RateLimit
+  plug :limit, adapter: {Tally.Limit.RateLimit, [{5, :min}]}
 
   defp do_identify(conn, adapter, opts) do
     case conn |> adapter.identify(adapter.init(opts)) do
