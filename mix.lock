@@ -1,5 +1,7 @@
-%{"cowboy": {:hex, :cowboy, "1.0.3"},
+%{"con_cache": {:hex, :con_cache, "0.9.0"},
+  "cowboy": {:hex, :cowboy, "1.0.3"},
   "cowlib": {:hex, :cowlib, "1.0.1"},
+  "exactor": {:hex, :exactor, "2.2.0"},
   "hackney": {:hex, :hackney, "1.1.0"},
   "idna": {:hex, :idna, "1.0.2"},
   "plug": {:hex, :plug, "1.0.2"},
