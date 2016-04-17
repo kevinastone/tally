@@ -6,7 +6,7 @@ defmodule Tally.RouterTest do
 
   defp add_routes(conn, routes) do
 
-    conn |> Plug.Conn.put_private :tally_routes, Router.init(routes)
+    conn |> Plug.Conn.put_private(:tally_routes, Router.init(routes))
   end
 
   test "Match Route" do
