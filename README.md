@@ -20,3 +20,11 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
         def application do
           [applications: [:tally]]
         end
+
+## Running
+
+Tally allows you to proxy url prefixes with an upstream server and a rate limit config.
+
+```sh
+tally /ip http://httpbin.org/ip 20/m
+```

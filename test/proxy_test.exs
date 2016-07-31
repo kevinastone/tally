@@ -6,6 +6,7 @@ defmodule Tally.ProxyTest do
 
   @server_host "localhost"
   @server_port 4002
+  @opts []
 
   defmodule TestServer do
     use Plug.Router
@@ -39,10 +40,10 @@ defmodule Tally.ProxyTest do
   test "Proxy HTTP" do
 
     upstream = "http://#{@server_host}:#{@server_port}"
-    Proxy.init(upstream)
     conn =
       conn(:get, "/hello")
-      |> Proxy.call(upstream)
+      |> Proxy.configure(upstream)
+      |> Proxy.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 200
@@ -54,7 +55,8 @@ defmodule Tally.ProxyTest do
     Proxy.init(upstream)
     conn =
       conn(:get, "/fail")
-      |> Proxy.call(upstream)
+      |> Proxy.configure(upstream)
+      |> Proxy.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 503
@@ -66,7 +68,8 @@ defmodule Tally.ProxyTest do
     Proxy.init(upstream)
     conn =
       conn(:get, "/hello")
-      |> Proxy.call(upstream)
+      |> Proxy.configure(upstream)
+      |> Proxy.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 503

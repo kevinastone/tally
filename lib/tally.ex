@@ -14,20 +14,19 @@ defmodule Tally do
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _arg) do
-    {options, _args} = parse_args(System.argv || [])
-    options |> run
+    parse_args(System.argv || []) |> run
   end
 
   def main(_args) do
     :timer.sleep(:infinity)
   end
 
-  defp run([help: true]) do
+  defp run({[help: true], _args}) do
     IO.puts @module_doc
     System.halt(0)
   end
 
-  defp run(options) do
+  defp run({options, _args}) do
     Tally.Supervisor.start_link(options)
   end
 
@@ -43,6 +42,10 @@ defmodule Tally do
         h: :host
       ]
     )
-    {options, args}
+
+    upstreams = Enum.map(args, fn arg ->
+      {"/", arg}
+    end)
+    {options, upstreams}
   end
 end

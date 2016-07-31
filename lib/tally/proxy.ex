@@ -3,10 +3,9 @@ defmodule Tally.Proxy do
 
   plug :proxy
 
-  def call(conn, upstream) do
+  def configure(conn, upstream) do
     conn
     |> Plug.Conn.put_private(:tally_upstream, upstream)
-    |> super(upstream)
   end
 
   def proxy(%Plug.Conn{private: %{tally_upstream: upstream}} = conn, _opts) do

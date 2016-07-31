@@ -7,7 +7,7 @@ defmodule Tally.Bouncer do
   defp do_identify(conn, adapter, opts) do
     case conn |> adapter.identify(adapter.init(opts)) do
       {:ok, conn, identity} -> conn |> Plug.Conn.assign(:identity, identity)
-      {:fail, conn} -> conn |> halt
+      {:fail, conn} -> conn
     end
   end
 

@@ -3,4 +3,10 @@ defmodule Tally.Handler do
 
   plug Tally.Bouncer
   plug Tally.Proxy
+
+  def call(conn, upstream) do
+    conn
+    |> Tally.Proxy.configure(upstream)
+    |> super(upstream)
+  end
 end
