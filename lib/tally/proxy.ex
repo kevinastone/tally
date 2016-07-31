@@ -1,7 +1,6 @@
 defmodule Tally.Proxy do
   use Plug.Builder
 
-  plug Tally.Bouncer
   plug :proxy
 
   def call(conn, upstream) do
@@ -73,7 +72,7 @@ defmodule Tally.Proxy do
     end
   end
 
-  defp uri(conn, upstream) do
+  def uri(conn, upstream) do
     base = upstream <> "/" <> Enum.join(conn.path_info, "/")
     case conn.query_string do
       "" -> base

@@ -9,7 +9,7 @@ defmodule Tally.Router do
 
       %Route{
         match: match,
-        callback: fn conn -> Tally.Proxy.call(conn, Tally.Proxy.init(upstream)) end
+        callback: fn conn -> Tally.Handler.call(conn, Tally.Handler.init(upstream)) end
       }
     end
   end
