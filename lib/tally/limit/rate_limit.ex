@@ -29,8 +29,8 @@ defmodule Tally.Limit.RateLimit do
 
       conn = conn |> Plug.Conn.merge_resp_headers(limit_headers(limit, duration, used))
 
-      if used >= limit do
-        conn = conn |> Plug.Conn.send_resp(429, "Too many requests") |> Plug.Conn.halt
+      conn = if used >= limit do
+        conn |> Plug.Conn.send_resp(429, "Too many requests") |> Plug.Conn.halt
       else
 
         ConCache.update(:tally, key, fn old_value ->
@@ -38,7 +38,7 @@ defmodule Tally.Limit.RateLimit do
         end)
 
         used = ConCache.get(:tally, key)
-        conn = conn |> Plug.Conn.merge_resp_headers(%{"x-ratelimit-remaining" => to_string(max(limit - used, 0))})
+        conn |> Plug.Conn.merge_resp_headers(%{"x-ratelimit-remaining" => to_string(max(limit - used, 0))})
       end
       conn
     end

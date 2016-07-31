@@ -41,7 +41,7 @@ defmodule Tally.Mixfile do
       {:cowboy, "~> 1.0.0"},
       {:plug, "~> 1.0"},
       {:hackney, "~> 1.1.0"},
-      {:con_cache, "~> 0.9.0"}
+      {:con_cache, "~> 0.11.0"}
     ]
   end
 
