@@ -69,7 +69,7 @@ defmodule Tally.Proxy do
   defp read_proxy(conn, client) do
     case :hackney.start_response(client) do
       {:ok, status, headers, client} -> send_proxy_response(conn, client, status, headers)
-      {:error, reason} ->error_proxy_response(conn, client, reason)
+      {:error, reason} -> error_proxy_response(conn, client, reason)
     end
   end
 

@@ -1,5 +1,7 @@
 # Tally
 
+[![Build Status](https://travis-ci.org/kevinastone/tally.svg?branch=master)](https://travis-ci.org/kevinastone/tally)
+
 HTTP Proxy for enforcing Rate Limiting.  Acts as an HTTP middleware for
 enforcing client rate limits.
 

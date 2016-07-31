@@ -5,7 +5,7 @@ defmodule Tally.Router do
 
     def new(path, upstream) do
 
-      {_vars, match}   = Plug.Router.Utils.build_path_match(path)
+      {_vars, match} = Plug.Router.Utils.build_path_match(path)
 
       %Route{
         match: match,
