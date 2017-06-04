@@ -38,11 +38,11 @@ defmodule Tally.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:cowboy, "~> 1.0.0"},
+      {:cowboy, "~> 1.1.0"},
       {:plug, "~> 1.0"},
-      {:hackney, "~> 1.6.0"},
-      {:con_cache, "~> 0.11.0"},
-      {:credo, "~> 0.9", only: [:dev, :test]}
+      {:hackney, "~> 1.8.0"},
+      {:con_cache, "~> 0.12.0"},
+      {:credo, "~> 0.8", only: [:dev, :test]}
     ]
   end
 
