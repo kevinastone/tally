@@ -42,7 +42,7 @@ defmodule Tally.Mixfile do
       {:plug, "~> 1.0"},
       {:hackney, "~> 1.6.0"},
       {:con_cache, "~> 0.11.0"},
-      {:credo, "~> 0.4", only: [:dev, :test]}
+      {:credo, "~> 0.9", only: [:dev, :test]}
     ]
   end
 
