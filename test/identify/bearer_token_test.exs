@@ -6,8 +6,6 @@ defmodule Tally.Identify.BearerTokenTest do
 
   @header_name "authorization"
 
-  @opts BearerToken.init([])
-
   test "Extracts Bearer Token" do
     {:ok, _, identity} = conn(:get, "/hello")
     |> put_req_header(@header_name, "Bearer abcd")

@@ -18,7 +18,7 @@ defmodule Tally.Server do
     ip = case host do
       "localhost" -> {127, 0, 0, 1}
       host ->
-        case :inet.parse_address(to_char_list host) do
+        case :inet.parse_address(to_charlist host) do
           {:ok, ip} -> ip
         end
     end

@@ -8,9 +8,9 @@ defmodule Tally.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      escript: [main_module: Tally],
-     deps: deps,
-     aliases: aliases,
-     package: package]
+     deps: deps(),
+     aliases: aliases(),
+     package: package()]
   end
 
   def aliases do

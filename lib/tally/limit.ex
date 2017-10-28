@@ -1,7 +1,5 @@
 defmodule Tally.Limit do
 
-  use Behaviour
-
   @type identity :: binary
 
   @doc """
@@ -9,7 +7,7 @@ defmodule Tally.Limit do
   The options returned from this function will be given
   to `get/3`, `put/4` and `delete/3`.
   """
-  defcallback init(Plug.opts) :: Plug.opts
+  @callback init(Plug.opts) :: Plug.opts
 
-  defcallback limit(Plug.Conn.t, identity, Plug.opts) :: Plug.Conn.t
+  @callback limit(Plug.Conn.t, identity, Plug.opts) :: Plug.Conn.t
 end
