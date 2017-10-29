@@ -11,7 +11,6 @@ defmodule Tally.BouncerTest do
       |> put_req_header("authorization", "Bearer abcd")
       |> Bouncer.call(nil)
 
-
   for expected_header <- [
     {"x-ratelimit-limit", "5"},
     {"x-ratelimit-period", "min"},
